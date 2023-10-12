@@ -15,10 +15,6 @@ let gameOver = true;
 
 document.addEventListener("mousedown", () => Jump());
 
-// setInterval(function () {
-//   Main();
-// }, 10);
-
 Main();
 
 function Main() {
@@ -68,13 +64,11 @@ function CheckGameOver() {
       window.getComputedStyle(bird).getPropertyValue("left")
     );
 
-    //detect cactus collision
-    if (dinoTop >= 150 && Math.abs(cactusleft) < 7) {
-      Collision();
-    }
-
-    //detect bird collision
-    if (dinoTop <= 55 && Math.abs(birdleft) < 11) {
+    //detect obstacle collision
+    if (
+      (dinoTop >= 150 && Math.abs(cactusleft) < 7) ||
+      (dinoTop <= 55 && Math.abs(birdleft) < 11)
+    ) {
       Collision();
     }
   }
@@ -105,8 +99,4 @@ function Collision() {
 
   //reset cactus
   RemoveObstacles();
-}
-
-function SpeedUp() {
-  bird?.animate;
 }
