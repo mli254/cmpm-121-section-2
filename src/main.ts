@@ -15,26 +15,27 @@ let gameOver = true;
 
 document.addEventListener("mousedown", () => Jump());
 
-setInterval(function () {
-  Main();
-}, 10);
+// setInterval(function () {
+//   Main();
+// }, 10);
+
+Main();
 
 function Main() {
-  if (gameOver == false) {
-    score = score + 1;
+  if (gameOver === false) {
+    score += 1;
     SetText("Score: " + score);
 
     CheckGameOver();
   }
+  requestAnimationFrame(Main);
 }
 
 function Jump() {
-  if (gameOver === false) {
-    if (isJumping == false) {
-      isJumping = true;
-      dino?.classList.add("jump");
-      setTimeout(RemoveJump, 500);
-    }
+  if (gameOver === false && isJumping === false) {
+    isJumping = true;
+    dino?.classList.add("jump");
+    setTimeout(RemoveJump, 500);
   } else {
     StartGame();
   }
@@ -51,7 +52,7 @@ function RemoveObstacles() {
 }
 
 function CheckGameOver() {
-  if (gameOver == false && dino != null && cactus != null && bird != null) {
+  if (gameOver === false && dino !== null && cactus !== null && bird !== null) {
     //get is dinosaur jumping
     let dinoTop = parseInt(
       window.getComputedStyle(dino).getPropertyValue("top")
@@ -69,30 +70,12 @@ function CheckGameOver() {
 
     //detect cactus collision
     if (dinoTop >= 150 && Math.abs(cactusleft) < 7) {
-      //end game
-      console.log("player died!");
-      SetText("Final Score: " + score + "! Click To Play Again!");
-      gameOver = true;
-
-      //reset player
-      RemoveJump();
-
-      //reset cactus
-      RemoveObstacles();
+      Collision();
     }
 
     //detect bird collision
     if (dinoTop <= 55 && Math.abs(birdleft) < 11) {
-      //end game
-      console.log("player died!");
-      SetText("Final Score: " + score + "! Click To Play Again!");
-      gameOver = true;
-
-      //reset player
-      RemoveJump();
-
-      //reset cactus
-      RemoveObstacles();
+      Collision();
     }
   }
 }
@@ -109,4 +92,21 @@ function SetText(s: string) {
   if (scoreText) {
     scoreText.textContent = s;
   }
+}
+
+function Collision() {
+  //end game
+  console.log("player died!");
+  SetText("Final Score: " + score + "! Click To Play Again!");
+  gameOver = true;
+
+  //reset player
+  RemoveJump();
+
+  //reset cactus
+  RemoveObstacles();
+}
+
+function SpeedUp() {
+  bird?.animate;
 }
